@@ -296,7 +296,7 @@ TODO
   * [ansible.capabilities(discover)](#ansiblecapabilitiesdiscover)
   * [ansibleCapabilities.receptionistBeh](#ansiblecapabilitiesreceptionistbeh)
   * [ansibleCapabilities.registerDomain(domainName, receptionist)](#ansiblecapabilitiesregisterdomaindomainname-receptionist)
-  * [ansibleCapabilities.registerTransport(transportInfo)](#ansibleCapabilitiesregistertransporttransportinfo)
+  * [ansibleCapabilities.registerTransport(transportInfo)](#ansiblecapabilitiesregistertransporttransportinfo)
   * [ansibleCapabilities.sendBeh](#ansiblecapabilitiessendbeh)
 
 ### ansible.capabilities(discover)

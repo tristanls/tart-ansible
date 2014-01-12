@@ -167,15 +167,10 @@ var httpCaps3 = httpTransport.server(sponsor(ansibleCaps3.receptionistBeh));
 var httpCaps4 = httpTransport.server(sponsor(ansibleCaps4.receptionistBeh));
 var httpCaps5 = httpTransport.server(sponsor(ansibleCaps5.receptionistBeh));
 
-var closeHttp1 = sponsor(httpCaps1.closeBeh);
 var listenHttp1 = sponsor(httpCaps1.listenBeh);
-var closeHttp2 = sponsor(httpCaps2.closeBeh);
 var listenHttp2 = sponsor(httpCaps2.listenBeh);
-var closeHttp3 = sponsor(httpCaps3.closeBeh);
 var listenHttp3 = sponsor(httpCaps3.listenBeh);
-var closeHttp4 = sponsor(httpCaps4.closeBeh);
 var listenHttp4 = sponsor(httpCaps4.listenBeh);
-var closeHttp5 = sponsor(httpCaps5.closeBeh);
 var listenHttp5 = sponsor(httpCaps5.listenBeh);
 
 var turnOnHttp = function (listen, port, next) {
@@ -194,6 +189,7 @@ turnOnHttp(listenHttp1, 8081,
                     function () {
 
 console.log('Tart HTTP transports are ON');
+console.log('');
 
 // create domains (only need ids again)
 
@@ -261,7 +257,7 @@ var doRandomSend = function doRandomSend () {
         content: '"foo"',
         fail: function (error) { console.dir(error); }
     });
-    
+
     setTimeout(doRandomSend, Math.floor(Math.random() * 5000));
 };
 
