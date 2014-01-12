@@ -13,7 +13,8 @@
     "discover-tcp-transport": "3.0.1",
     "nodeunit": "0.8.2",
     "tart": "0.2.0",
-    "tart-transport-http": "0.1.0"
+    "tart-transport-http": "0.1.0",
+    "tart-transport-udp": "0.1.0"
   },
   "repository": {
     "type": "git",

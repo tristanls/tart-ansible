@@ -36,6 +36,7 @@ var Discover = require('discover');
 var DiscoverTcpTransport = require('discover-tcp-transport');
 var httpTransport = require('tart-transport-http');
 var tart = require('tart');
+var udpTransport = require('tart-transport-udp');
 
 var sponsor = tart.minimal();
 
@@ -125,13 +126,19 @@ var ansibleSend3 = sponsor(ansibleCaps3.sendBeh);
 var ansibleSend4 = sponsor(ansibleCaps4.sendBeh);
 var ansibleSend5 = sponsor(ansibleCaps5.sendBeh);
 
-// register HTTP Tart transports
+// register Tart transports
 
 var httpSend1 = sponsor(httpTransport.sendBeh);
 var httpSend2 = sponsor(httpTransport.sendBeh);
 var httpSend3 = sponsor(httpTransport.sendBeh);
 var httpSend4 = sponsor(httpTransport.sendBeh);
 var httpSend5 = sponsor(httpTransport.sendBeh);
+
+var udpSend1 = sponsor(udpTransport.sendBeh);
+var udpSend2 = sponsor(udpTransport.sendBeh);
+var udpSend3 = sponsor(udpTransport.sendBeh);
+var udpSend4 = sponsor(udpTransport.sendBeh);
+var udpSend5 = sponsor(udpTransport.sendBeh);
 
 ansibleCaps1.registerTransport({
     scheme: 'http', 
@@ -159,13 +166,51 @@ ansibleCaps5.registerTransport({
     data: 'http://localhost:8085'
 });
 
+ansibleCaps1.registerTransport({
+    scheme: 'udp', 
+    send: udpSend1,
+    data: 'udp://localhost:9081'
+});
+ansibleCaps2.registerTransport({
+    scheme: 'udp', 
+    send: udpSend2,
+    data: 'udp://localhost:9082'
+});
+ansibleCaps3.registerTransport({
+    scheme: 'udp', 
+    send: udpSend3,
+    data: 'udp://localhost:9083'
+});
+ansibleCaps4.registerTransport({
+    scheme: 'udp', 
+    send: udpSend4,
+    data: 'udp://localhost:9084'
+});
+ansibleCaps5.registerTransport({
+    scheme: 'udp', 
+    send: udpSend5,
+    data: 'udp://localhost:9085'
+});
+
 // create HTTP transports and direct them to the ansible receptionists
 
-var httpCaps1 = httpTransport.server(sponsor(ansibleCaps1.receptionistBeh));
-var httpCaps2 = httpTransport.server(sponsor(ansibleCaps2.receptionistBeh));
-var httpCaps3 = httpTransport.server(sponsor(ansibleCaps3.receptionistBeh));
-var httpCaps4 = httpTransport.server(sponsor(ansibleCaps4.receptionistBeh));
-var httpCaps5 = httpTransport.server(sponsor(ansibleCaps5.receptionistBeh));
+var ansibleReceptionist1 = sponsor(ansibleCaps1.receptionistBeh);
+var ansibleReceptionist2 = sponsor(ansibleCaps2.receptionistBeh);
+var ansibleReceptionist3 = sponsor(ansibleCaps3.receptionistBeh);
+var ansibleReceptionist4 = sponsor(ansibleCaps4.receptionistBeh);
+var ansibleReceptionist5 = sponsor(ansibleCaps5.receptionistBeh);
+
+var httpCaps1 = httpTransport.server(ansibleReceptionist1);
+var httpCaps2 = httpTransport.server(ansibleReceptionist2);
+var httpCaps3 = httpTransport.server(ansibleReceptionist3);
+var httpCaps4 = httpTransport.server(ansibleReceptionist4);
+var httpCaps5 = httpTransport.server(ansibleReceptionist5);
+
+var udpCaps1 = udpTransport.server(ansibleReceptionist1);
+var udpCaps2 = udpTransport.server(ansibleReceptionist2);
+var udpCaps3 = udpTransport.server(ansibleReceptionist3);
+var udpCaps4 = udpTransport.server(ansibleReceptionist4);
+var udpCaps5 = udpTransport.server(ansibleReceptionist5);
 
 var listenHttp1 = sponsor(httpCaps1.listenBeh);
 var listenHttp2 = sponsor(httpCaps2.listenBeh);
@@ -173,22 +218,33 @@ var listenHttp3 = sponsor(httpCaps3.listenBeh);
 var listenHttp4 = sponsor(httpCaps4.listenBeh);
 var listenHttp5 = sponsor(httpCaps5.listenBeh);
 
-var turnOnHttp = function (listen, port, next) {
+var listenUdp1 = sponsor(udpCaps1.listenBeh);
+var listenUdp2 = sponsor(udpCaps2.listenBeh);
+var listenUdp3 = sponsor(udpCaps3.listenBeh);
+var listenUdp4 = sponsor(udpCaps4.listenBeh);
+var listenUdp5 = sponsor(udpCaps5.listenBeh);
+
+var turnOnTransport = function (listen, port, next) {
     return function () {
         listen({host: 'localhost', port: port, ok: next});
     }
 };
 
-console.log('turning on Tart HTTP transports');
+console.log('turning on Tart transports');
 
-turnOnHttp(listenHttp1, 8081,
-    turnOnHttp(listenHttp2, 8082,
-        turnOnHttp(listenHttp3, 8083, 
-            turnOnHttp(listenHttp4, 8084, 
-                turnOnHttp(listenHttp5, 8085,
-                    function () {
+turnOnTransport(listenHttp1, 8081,
+    turnOnTransport(listenHttp2, 8082,
+        turnOnTransport(listenHttp3, 8083, 
+            turnOnTransport(listenHttp4, 8084, 
+                turnOnTransport(listenHttp5, 8085,
+                    turnOnTransport(listenUdp1, 9081,
+                        turnOnTransport(listenUdp2, 9082,
+                            turnOnTransport(listenUdp3, 9083,
+                                turnOnTransport(listenUdp4, 9084,
+                                    turnOnTransport(listenUdp5, 9085,
+                                        function () {
 
-console.log('Tart HTTP transports are ON');
+console.log('Tart transports are ON');
 console.log('');
 
 // create domains (only need ids again)
@@ -263,6 +319,6 @@ var doRandomSend = function doRandomSend () {
 
 doRandomSend();
 
-})))))(); // turnOnHttp
+}))))))))))(); // turnOnTransport
 
 })))))(); // turnOn

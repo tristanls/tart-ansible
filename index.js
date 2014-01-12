@@ -136,8 +136,8 @@ ansible.capabilities = function capabilities(discover) {
             // }
             // select available transports according to contact.data URI
 
-            // FIXME: for now pick first contact
-            var scheme = Object.keys(contact.data)[0];
+            // FIXME: for now pick random transport
+            var scheme = Object.keys(contact.data)[Math.floor(Math.random() * Object.keys(contact.data).length)];
             var address = contact.data[scheme];
             var transport = transports[scheme];
             if (!transport || !transport.send) {
