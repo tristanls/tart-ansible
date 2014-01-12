@@ -1,0 +1,31 @@
+{
+  "name": "tart-ansible",
+  "version": "0.0.0",
+  "description": "Ansible is remote message delivery mechanism for Tart",
+  "scripts": {
+    "inject-examples": "node scripts/injectExamples.js",
+    "readme": "node examples/readme.js",
+    "test": "node scripts/test.js"
+  },
+  "main": "index.js",
+  "devDependencies": {
+    "discover": "0.1.8",
+    "discover-tcp-transport": "3.0.1",
+    "nodeunit": "0.8.2",
+    "tart": "0.2.0",
+    "tart-transport-http": "0.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:tristanls/tart-ansible.git"
+  },
+  "keywords": [
+    "tart",
+    "ansible"
+  ],
+  "contributors": [
+    "Dale Schumacher <dale.schumacher@gmail.com>",
+    "Tristan Slominski <tristan.slominski@gmail.com>"
+  ],
+  "license": "MIT"
+}
