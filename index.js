@@ -64,6 +64,7 @@ ansible.capabilities = function capabilities(discover) {
         var contact = {
             id: domainName,
             data: data,
+            // FIXME: requiring transport breaks all sorts of encapsulation here
             transport: {
                 host: discover.transport.host,
                 port: discover.transport.port
