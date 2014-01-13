@@ -30,6 +30,8 @@ OTHER DEALINGS IN THE SOFTWARE.
 */
 "use strict";
 
+var url = require('url');
+
 var ansible = module.exports;
 
 ansible.capabilities = function capabilities(discover) {
@@ -41,11 +43,17 @@ ansible.capabilities = function capabilities(discover) {
         var content = JSON.parse(message.content);
         var receptionist = domains[content.domain];
         if (!receptionist) {
+            // FIXME: remove this debug logging
             console.log("***NO DOMAIN FOUND***");
             return;
         }
 
-        receptionist(content.content);
+        var parsed = url.parse(message.address);
+
+        receptionist({
+            address: 'ansible://' + content.domain + '/' + parsed.hash,
+            content: content.content
+        });
     };
 
     var registerDomain = function registerDomain(domainName, receptionist) {
@@ -115,6 +123,7 @@ ansible.capabilities = function capabilities(discover) {
             }
 
             if (error) {
+                // FIXME: remove this debug logging
                 console.log("***ERROR SENDING***");
                 console.dir(error);
                 if (message.fail) {

@@ -258,23 +258,28 @@ var domainName5 = crypto.randomBytes(42).toString('base64');
 // create domain receptionists
 
 var domainReceptionist1 = sponsor(function (message) {
-    console.log('[domain 1====] received message:', message);
+    console.log('[domain 1====] received message:');
+    console.log(message);
     console.log('');
 });
 var domainReceptionist2 = sponsor(function (message) {
-    console.log('[domain =2===] received message:', message);
+    console.log('[domain =2===] received message:');
+    console.log(message);
     console.log('');
 });
 var domainReceptionist3 = sponsor(function (message) {
-    console.log('[domain ==3==] received message:', message);
+    console.log('[domain ==3==] received message:');
+    console.log(message);
     console.log('');
 });
 var domainReceptionist4 = sponsor(function (message) {
-    console.log('[domain ===4=] received message:', message);
+    console.log('[domain ===4=] received message:');
+    console.log(message);
     console.log('');
 });
 var domainReceptionist5 = sponsor(function (message) {
-    console.log('[domain ====5] received message:', message);
+    console.log('[domain ====5] received message:');
+    console.log(message);
     console.log('');
 });
 
