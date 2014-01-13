@@ -27,6 +27,11 @@ URIs used by Ansible are represented in absolute form. The "ansible" scheme is u
 ansible_URI = "ansible:" "//" authority "/#" capability
 ```
 
+Example:
+```
+ansible://YLKV/ZUYvGnggOTxgDL2jqUWfX0tFa8PRI+ZKw9HUE9gSTG2r5Oi1yZ2/#i3VGpoJPmf7pHxINs6At5IfItEKGgxBV09g2eEcqsaJWTapd26t5J9IO
+```
+
 The semantics are such that the identified `authority` is the domain containing the specified `capability`.
 
 When comparing two URIs to decide whether they match or not, comparison must be case-sensitive octet-by-octet comparison with the exception of the scheme, which must be case-insensitive.
