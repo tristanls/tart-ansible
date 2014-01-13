@@ -160,7 +160,7 @@ ansible.capabilities = function capabilities(discover) {
 
             var content = {
                 domain: authority,
-                content: JSON.parse(message.content)
+                content: message.content
             };
 
             var msg = {

@@ -315,7 +315,7 @@ var doRandomSend = function doRandomSend () {
 
     originAnsibleSend.send({
         address: 'ansible://' + destDomain.domain + '/#' + crypto.randomBytes(42).toString('base64'),
-        content: '"foo"',
+        content: JSON.stringify("foo"),
         fail: function (error) { console.dir(error); }
     });
 
