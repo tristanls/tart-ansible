@@ -275,23 +275,28 @@ var domainName5 = crypto.randomBytes(42).toString('base64');
 // create domain receptionists
 
 var domainReceptionist1 = sponsor(function (message) {
-    console.log('[domain 1====] received message:', message);
+    console.log('[domain 1====] received message:');
+    console.log(message);
     console.log('');
 });
 var domainReceptionist2 = sponsor(function (message) {
-    console.log('[domain =2===] received message:', message);
+    console.log('[domain =2===] received message:');
+    console.log(message);
     console.log('');
 });
 var domainReceptionist3 = sponsor(function (message) {
-    console.log('[domain ==3==] received message:', message);
+    console.log('[domain ==3==] received message:');
+    console.log(message);
     console.log('');
 });
 var domainReceptionist4 = sponsor(function (message) {
-    console.log('[domain ===4=] received message:', message);
+    console.log('[domain ===4=] received message:');
+    console.log(message);
     console.log('');
 });
 var domainReceptionist5 = sponsor(function (message) {
-    console.log('[domain ====5] received message:', message);
+    console.log('[domain ====5] received message:');
+    console.log(message);
     console.log('');
 });
 
@@ -320,14 +325,14 @@ var domains = [
 ];
 
 var doRandomSend = function doRandomSend () {
-    var originAnsibleSend = ansibleSends[Math.floor(Math.random() * ansibleSends.length)];
+    var origin = ansibleSends[Math.floor(Math.random() * ansibleSends.length)];
     var destDomain = domains[Math.floor(Math.random() * domains.length)];
 
-    console.log(originAnsibleSend.ansible, 'sending: "foo" to', destDomain.log);
+    console.log(origin.ansible, 'sending: "foo" to', destDomain.log);
 
-    originAnsibleSend.send({
+    origin.send({
         address: 'ansible://' + destDomain.domain + '/#' + crypto.randomBytes(42).toString('base64'),
-        content: '"foo"',
+        content: JSON.stringify("foo"),
         fail: function (error) { console.dir(error); }
     });
 

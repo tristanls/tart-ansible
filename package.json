@@ -9,8 +9,8 @@
   },
   "main": "index.js",
   "devDependencies": {
-    "discover": "0.1.8",
-    "discover-tcp-transport": "3.0.1",
+    "discover": "0.1.10",
+    "discover-tcp-transport": "4.0.0",
     "nodeunit": "0.8.2",
     "tart": "0.2.0",
     "tart-transport-http": "0.1.0",

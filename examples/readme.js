@@ -308,12 +308,12 @@ var domains = [
 ];
 
 var doRandomSend = function doRandomSend () {
-    var originAnsibleSend = ansibleSends[Math.floor(Math.random() * ansibleSends.length)];
+    var origin = ansibleSends[Math.floor(Math.random() * ansibleSends.length)];
     var destDomain = domains[Math.floor(Math.random() * domains.length)];
 
-    console.log(originAnsibleSend.ansible, 'sending: "foo" to', destDomain.log);
+    console.log(origin.ansible, 'sending: "foo" to', destDomain.log);
 
-    originAnsibleSend.send({
+    origin.send({
         address: 'ansible://' + destDomain.domain + '/#' + crypto.randomBytes(42).toString('base64'),
         content: JSON.stringify("foo"),
         fail: function (error) { console.dir(error); }
