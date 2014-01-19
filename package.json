@@ -1,6 +1,6 @@
 {
   "name": "tart-ansible",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Ansible is remote message delivery mechanism for Tart",
   "scripts": {
     "inject-examples": "node scripts/injectExamples.js",
