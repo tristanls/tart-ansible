@@ -360,6 +360,7 @@ TODO
   * [ansibleCapabilities.registerDomain(domainName, receptionist)](#ansiblecapabilitiesregisterdomaindomainname-receptionist)
   * [ansibleCapabilities.registerTransport(transportInfo)](#ansiblecapabilitiesregistertransporttransportinfo)
   * [ansibleCapabilities.sendBeh](#ansiblecapabilitiessendbeh)
+  * [ansibleCapabilities.unregisterDomain(domainName)](#ansiblecapabilitiesunregisterdomaindomainname)
 
 ### ansible.capabilities(discover)
 
@@ -378,6 +379,10 @@ TODO
 TODO
 
 ### ansibleCapabilities.sendBeh
+
+TODO
+
+### ansibleCapabilities.unregisterDomain(domainName)
 
 TODO
 

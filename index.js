@@ -174,10 +174,16 @@ ansible.capabilities = function capabilities(discover) {
         });        
     };
 
+    var unregisterDomain = function unregisterDomain(domainName) {
+        delete domains[domainName];
+        discover.unregister({id: domainName});
+    };
+
     return {
         receptionistBeh: receptionistBeh,
         registerDomain: registerDomain,
         registerTransport: registerTransport,
-        sendBeh: sendBeh
+        sendBeh: sendBeh,
+        unregisterDomain: unregisterDomain
     };
 };
