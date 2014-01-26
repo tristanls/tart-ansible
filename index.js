@@ -41,8 +41,8 @@ ansible.capabilities = function capabilities(discover) {
     var receptionistBeh = function receptionistBeh(message) {
         // find registered domain receptionist for the message
         var content = JSON.parse(message.content);
-        var receptionist = domains[content.domain];
-        if (!receptionist) {
+        var domain = domains[content.domain];
+        if (!domain) {
             // FIXME: remove this debug logging
             console.log("***NO DOMAIN FOUND***");
             return;
@@ -50,7 +50,11 @@ ansible.capabilities = function capabilities(discover) {
 
         var parsed = url.parse(message.address);
 
-        receptionist({
+        if (content.hint) {
+            discover.add(content.hint);
+        }
+
+        domain.receptionist({
             address: 'ansible://' + content.domain + '/' + parsed.hash,
             content: content.content
         });
@@ -65,8 +69,14 @@ ansible.capabilities = function capabilities(discover) {
             id: domainName,
             data: data
         };
-        domains[domainName] = receptionist;
-        discover.register(contact);
+
+        // discover.register() attaches transport information to the contact
+        contact = discover.register(contact);
+
+        domains[domainName] = {
+            contact: contact,
+            receptionist: receptionist
+        };
     };
 
     var registerTransport = function registerTransport(transportInfo) {
@@ -80,7 +90,8 @@ ansible.capabilities = function capabilities(discover) {
         // FIXME: remove this debug logging
         var loggedMessage = {
             address: message.address,
-            content: message.content
+            content: message.content,
+            hint: message.hint
         };
         console.log(loggedMessage);
         console.log('');
@@ -158,6 +169,14 @@ ansible.capabilities = function capabilities(discover) {
                 domain: authority,
                 content: message.content
             };
+
+            // determine if we should be hinting the DHT as to where to respond
+            // only hint if we have valid contact information for the domain
+            // to be hinted
+            var domain = domains[message.hint];
+            if (domain) {
+                content.hint = domain.contact;
+            }
 
             var msg = {
                 address: address + "/#" + capability,

@@ -83,6 +83,20 @@ var discover3 = new Discover({inlineTrace: false, seeds: seeds, transport: disco
 var discover4 = new Discover({inlineTrace: false, seeds: seeds, transport: discoverTcpTransport4});
 var discover5 = new Discover({inlineTrace: false, seeds: seeds, transport: discoverTcpTransport5});
 
+var discoverNodes = [discover1, discover2, discover3, discover4, discover5];
+
+discoverNodes.forEach(function (discoverNode) {
+    discoverNode.on('stats.timers.find.ms', function (latency) {
+        console.log('~stats: discover.stats.timers.find.ms', latency);
+    });
+    discoverNode.on('stats.timers.find.round.ms', function (latency) {
+        console.log('~stats: discover.stats.timers.find.round.ms', latency);
+    });
+    discoverNode.on('stats.timers.find.request.ms', function (latency) {
+        console.log('~stats: discover.stats.timers.find.request.ms', latency);
+    });
+});
+
 // turn on discover TCP transports
 
 var turnOn = function (transport, next) {
@@ -293,11 +307,11 @@ ansibleCaps5.registerDomain(domainName5, domainReceptionist5);
 
 // randomly issue ansible protocol sends locally to each ansible
 var ansibleSends = [
-    {send: ansibleSend1, ansible: '[ansible 1====]'}, 
-    {send: ansibleSend2, ansible: '[ansible =2===]'}, 
-    {send: ansibleSend3, ansible: '[ansible ==3==]'},
-    {send: ansibleSend4, ansible: '[ansible ===4=]'},
-    {send: ansibleSend5, ansible: '[ansible ====5]'}
+    {send: ansibleSend1, ansible: '[ansible 1====]', domain: domainName1},
+    {send: ansibleSend2, ansible: '[ansible =2===]', domain: domainName2},
+    {send: ansibleSend3, ansible: '[ansible ==3==]', domain: domainName3},
+    {send: ansibleSend4, ansible: '[ansible ===4=]', domain: domainName4},
+    {send: ansibleSend5, ansible: '[ansible ====5]', domain: domainName5}
 ];
 var domains = [
     {log: '[domain 1====]', domain: domainName1},
@@ -316,7 +330,8 @@ var doRandomSend = function doRandomSend () {
     origin.send({
         address: 'ansible://' + destDomain.domain + '/#' + crypto.randomBytes(42).toString('base64'),
         content: JSON.stringify("foo"),
-        fail: function (error) { console.dir(error); }
+        fail: function (error) { console.dir(error); },
+        hint: origin.domain
     });
 
     setTimeout(doRandomSend, Math.floor(Math.random() * 5000));
